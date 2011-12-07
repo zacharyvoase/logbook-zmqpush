@@ -16,7 +16,7 @@ setup(
     author='Zachary Voase',
     author_email='z@zacharyvoase.com',
     url='http://github.com/zacharyvoase/logbook-zmqpush',
-    py_modules='logbook_zmqpush',
+    py_modules=['logbook_zmqpush'],
     package_dir={'': 'lib'},
     install_requires=[
         'Logbook==0.3',
