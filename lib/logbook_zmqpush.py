@@ -55,4 +55,21 @@ class ZeroMQPullSubscriber(logbook.queues.ZeroMQSubscriber):
 
 @logbook.Processor
 def inject_hostname(log_record):
+    """A Logbook processor to inject the current hostname into log records."""
     log_record.extra['source'] = socket.gethostname()
+
+
+def inject(**params):
+
+    """
+    A Logbook processor to inject arbitrary information into log records.
+
+    Simply pass in keyword arguments and use as a context manager:
+
+        >>> with inject(identifier=str(uuid.uuid4())).applicationbound():
+        ...     logger.debug('Something happened')
+    """
+
+    def callback(log_record):
+        log_record.extra.update(params)
+    return Processor(callback)
