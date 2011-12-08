@@ -72,4 +72,4 @@ def inject(**params):
 
     def callback(log_record):
         log_record.extra.update(params)
-    return Processor(callback)
+    return logbook.Processor(callback)
