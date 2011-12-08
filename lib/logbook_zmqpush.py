@@ -1,3 +1,5 @@
+import socket
+
 import zmq
 import logbook.queues
 
@@ -49,3 +51,8 @@ class ZeroMQPullSubscriber(logbook.queues.ZeroMQSubscriber):
         self.socket = self.context.socket(zmq.PULL)
         if addr is not None:
             self.socket.bind(addr)
+
+
+@logbook.Processor
+def inject_hostname(log_record):
+    log_record.extra['source'] = socket.gethostname()
