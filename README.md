@@ -1,15 +1,13 @@
-Logbook ZeroMQ Push/Pull Handler
-================================
+# Logbook ZeroMQ Push/Pull Handler
 
-A simple subclass of `Logbook`_'s ZeroMQ Handler and Subscriber classes which
-uses a ZMQ_PUSH socket on the handler connected to a ZMQ_PULL socket on the
+A simple subclass of [Logbook][]'s ZeroMQ Handler and Subscriber classes which
+uses a `ZMQ_PUSH` socket on the handler connected to a `ZMQ_PULL` socket on the
 subscriber. This enables multiple processes to send logs to a central server.
 
-_ Logbook:: http://packages.python.org/Logbook/
+  [Logbook]: http://packages.python.org/Logbook/
 
 
-(Un)license
-===========
+## (Un)license
 
 This is free and unencumbered software released into the public domain.
 
