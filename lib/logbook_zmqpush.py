@@ -19,16 +19,28 @@ class ZeroMQPushHandler(logbook.queues.ZeroMQHandler):
         >>> handler = ZeroMQPushHandler('tcp://127.0.0.1:5501')
         >>> with handler.applicationbound():
         ...     logbook.debug("Something happened")
+
+    Switch off hostname injection with `hostname=False`:
+
+        >>> handler = ZeroMQPushHandler('tcp://127.0.0.1:5501', hostname=False)
+        >>> with handler.applicationbound():
+        ...     logbook.debug("No hostname info")
     """
 
     def __init__(self, addr=None, level=logbook.NOTSET, filter=None,
-                 bubble=False, context=None):
+                 bubble=False, context=None, hostname=True):
         logbook.Handler.__init__(self, level, filter, bubble)
 
+        self.hostname = hostname
         self.context = context or zmq.Context()
         self.socket = self.context.socket(zmq.PUSH)
         if addr is not None:
             self.socket.connect(addr)
+
+    def emit(self, record):
+        if self.hostname:
+            inject_hostname.process(record)
+        return super(ZeroMQPushHandler, self).emit(record)
 
 
 class ZeroMQPullSubscriber(logbook.queues.ZeroMQSubscriber):
